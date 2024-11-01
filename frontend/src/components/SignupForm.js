@@ -1,19 +1,21 @@
-// src/components/LoginForm.js
+// src/components/SignupForm.js
 import React, { useState } from 'react';
-import authService from '../services/authService';
+import { Link, useNavigate } from 'react-router-dom';
+import authService from '../services/authServices';
 
-const LoginForm = () => {
+const SignupForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
         try {
-            await authService.login({ email, password });
-            alert("Logged in successfully!");
-            // Redirect to dashboard or home
+            await authService.signup({ email, password });
+            alert("Signup successful!");
+            navigate("/success");
         } catch (err) {
             setError(err.message);
         }
@@ -21,7 +23,7 @@ const LoginForm = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Login</h2>
+            <h2>Signup</h2>
             {error && <p>{error}</p>}
             <input
                 type="email"
@@ -37,9 +39,12 @@ const LoginForm = () => {
                 placeholder="Password"
                 required
             />
-            <button type="submit">Login</button>
+            <button type="submit">Signup</button>
+            <p>
+                Already have an account? <Link to="/">Login</Link>
+            </p>
         </form>
     );
 };
 
-export default LoginForm;
+export default SignupForm;

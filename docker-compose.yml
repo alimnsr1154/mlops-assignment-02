@@ -1,18 +1,14 @@
-# docker-compose.yml
 version: '3.8'
 
 services:
-  frontend:
-    build: ./frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     environment:
-      DATABASE_URL: postgresql://your_user:your_password@db:5432/your_database
+      - FLASK_APP=app
+      - FLASK_RUN_HOST=0.0.0.0
+      - DATABASE_URL=postgresql://your_user:your_password@db:5432/mlops
     ports:
       - "5000:5000"
     depends_on:
@@ -21,10 +17,19 @@ services:
   db:
     image: postgres:13
     environment:
-      POSTGRES_DB: your_database
+      POSTGRES_DB: mlops
       POSTGRES_USER: your_user
       POSTGRES_PASSWORD: your_password
     volumes:
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000" # Maps port 80 in the container to 3000 on the host
+    depends_on:
+      - backend

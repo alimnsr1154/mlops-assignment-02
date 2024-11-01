@@ -1,6 +1,4 @@
 # app/db.py
-from app import db
-from app.models import User
+from flask_sqlalchemy import SQLAlchemy
 
-def init_db():
-    db.create_all()
+db = SQLAlchemy()

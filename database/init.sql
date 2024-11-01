@@ -1,4 +1,4 @@
 -- init.sql
-CREATE DATABASE your_database;
+CREATE DATABASE mlops;
 CREATE USER your_user WITH ENCRYPTED PASSWORD 'your_password';
-GRANT ALL PRIVILEGES ON DATABASE your_database TO your_user;
+GRANT ALL PRIVILEGES ON DATABASE mlops TO your_user;

@@ -1,6 +1,6 @@
 // src/components/ForgotPasswordForm.js
 import React, { useState } from 'react';
-import authService from '../services/authService';
+import authService from '../services/authServices';
 
 const ForgotPasswordForm = () => {
     const [email, setEmail] = useState('');
